@@ -1,26 +1,43 @@
-const url = "https://fakestoreapi.com/products?limit=3";
-
-const trendingData = () => {
-  fetch(url)
+const loadCategory = () => {
+  fetch("https://fakestoreapi.com/products/categories")
     .then((res) => res.json())
     .then((data) => {
-      trendingDataDisplay(data);
+      displayCategory(data);
     });
 };
+// Display category
+const displayCategory = (categories) => {
+  const categoryContainer = document.getElementById("category-container");
+  categoryContainer.innerHTML = "";
+  categories.forEach((category) => {
+    const categoryDiv = document.createElement("div");
+    categoryDiv.innerHTML = `
+        <button class="btn rounded-full">${category}</button>
+        `;
+    categoryContainer.append(categoryDiv);
+  });
+};
 
-const trendingDataDisplay = (trendings) => {
-  const trendingContainer = document.getElementById("trending-container");
-  trendingContainer.innerHTML = "";
-  trendings.forEach((trending) => {
+// All Product load
+const allProductLoad = async () => {
+  const url = "https://fakestoreapi.com/products";
+  const res = await fetch(url);
+  const data = await res.json();
+  displayAllProducts(data);
+};
+// Display All Products
+const displayAllProducts = (products) => {
+  const allProducts = document.getElementById("all-products");
+  products.forEach((product) => {
     const {
       price,
       category,
       image,
       title,
       rating: { rate, count },
-    } = trending;
-    const card = document.createElement("div");
-    card.innerHTML = `
+    } = product;
+    const productDiv = document.createElement("div");
+    productDiv.innerHTML =  `
         <div class="card bg-base-100 shadow-sm">
             <figure class="bg-gray-200">
               <img class="h-48 p-2"
@@ -29,9 +46,9 @@ const trendingDataDisplay = (trendings) => {
               />
             </figure>
             <div class="card-body">
-              <div class="flex justify-between">
+              <div class="flex items-center text-xs gap-1 justify-between">
                 <div class="badge bg-blue-200 rounded-lg">${category}</div>
-                <div class="flex gap-2 items-center text-sm">
+                <div class="flex gap-2 items-center">
                     <i class="fa-solid fa-star text-yellow-400"></i>
                     <p>${rate} (${count})</p>
                 </div>
@@ -53,7 +70,8 @@ const trendingDataDisplay = (trendings) => {
             </div>
           </div>
         `;
-    trendingContainer.append(card);
+        allProducts.append(productDiv)
   });
 };
-trendingData();
+loadCategory();
+allProductLoad();
