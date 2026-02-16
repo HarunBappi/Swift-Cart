@@ -1,3 +1,23 @@
+const homeLink = document.getElementById("home-link");
+const productLink = document.getElementById("product-link");
+const homeSection = document.getElementById("home-section");
+const productSection = document.getElementById("product-section");
+
+homeLink.addEventListener("click", ()=>{
+    homeSection.classList.remove('hidden')
+    productSection.classList.add('hidden')
+
+    homeLink.classList.add('text-blue-500')
+    productLink.classList.remove('text-blue-500')
+})
+productLink.addEventListener('click', () =>{
+    homeSection.classList.add('hidden')
+    productSection.classList.remove("hidden")
+
+    productLink.classList.add('text-blue-500')
+    homeLink.classList.remove('text-blue-500')
+})
+
 const loadCategory = () => {
   fetch("https://fakestoreapi.com/products/categories")
     .then((res) => res.json())
@@ -5,7 +25,27 @@ const loadCategory = () => {
       displayCategory(data);
     });
 };
+
+// Active Category
+const activeCategory = (activeText)=>{
+    const buttons = document.querySelectorAll('#category-container button, #all-btn')
+    buttons.forEach(btn =>{
+        if(btn.innerText === activeText){
+            btn.classList.add('btn-primary')
+        }else{
+            btn.classList.remove('btn-primary')
+        }
+    })
+}
+
 // Display category
+
+// ALL category
+document.getElementById("all-btn").addEventListener("click", () => {
+  allProductLoad();
+  activeCategory('All')
+});
+// Others category
 const displayCategory = (categories) => {
   const categoryContainer = document.getElementById("category-container");
   categoryContainer.innerHTML = "";
@@ -16,6 +56,7 @@ const displayCategory = (categories) => {
     button.innerText = category;
     button.addEventListener("click", () => {
       loadCategoryProduct(category);
+      activeCategory(category)
     });
     categoryDiv.append(button);
     categoryContainer.append(categoryDiv);
@@ -41,7 +82,7 @@ const allProductLoad = async () => {
 // Display All Products
 const displayAllProducts = (products) => {
   const allProducts = document.getElementById("all-products");
-  allProducts.innerHTML = ""
+  allProducts.innerHTML = "";
   products.forEach((product) => {
     const {
       price,
