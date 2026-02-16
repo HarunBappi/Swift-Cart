@@ -11,11 +11,24 @@ const displayCategory = (categories) => {
   categoryContainer.innerHTML = "";
   categories.forEach((category) => {
     const categoryDiv = document.createElement("div");
-    categoryDiv.innerHTML = `
-        <button class="btn rounded-full">${category}</button>
-        `;
+    const button = document.createElement("button");
+    button.className = "btn rounded-full";
+    button.innerText = category;
+    button.addEventListener("click", () => {
+      loadCategoryProduct(category);
+    });
+    categoryDiv.append(button);
     categoryContainer.append(categoryDiv);
   });
+};
+// loadCategoryProduct
+const loadCategoryProduct = (category) => {
+  const url = `https://fakestoreapi.com/products/category/${category}`;
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => {
+      displayAllProducts(data);
+    });
 };
 
 // All Product load
@@ -28,6 +41,7 @@ const allProductLoad = async () => {
 // Display All Products
 const displayAllProducts = (products) => {
   const allProducts = document.getElementById("all-products");
+  allProducts.innerHTML = ""
   products.forEach((product) => {
     const {
       price,
@@ -37,7 +51,7 @@ const displayAllProducts = (products) => {
       rating: { rate, count },
     } = product;
     const productDiv = document.createElement("div");
-    productDiv.innerHTML =  `
+    productDiv.innerHTML = `
         <div class="card bg-base-100 shadow-sm">
             <figure class="bg-gray-200">
               <img class="h-48 p-2"
@@ -70,7 +84,7 @@ const displayAllProducts = (products) => {
             </div>
           </div>
         `;
-        allProducts.append(productDiv)
+    allProducts.append(productDiv);
   });
 };
 loadCategory();
