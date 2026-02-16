@@ -85,6 +85,7 @@ const displayAllProducts = (products) => {
   allProducts.innerHTML = "";
   products.forEach((product) => {
     const {
+        id,
       price,
       category,
       image,
@@ -113,7 +114,7 @@ const displayAllProducts = (products) => {
               </h1>
               <p class="font-bold text-sm">$${price}</p>
               <div class="flex flex-wrap gap-2 items-center">
-                <button class="btn flex-1">
+                <button onclick="loadProductsDetails(${id})" class="btn flex-1">
                     <i class="fa-solid fa-eye"></i>
                     Details
                 </button>
@@ -128,5 +129,57 @@ const displayAllProducts = (products) => {
     allProducts.append(productDiv);
   });
 };
+// Products Details
+const loadProductsDetails = async (id)=>{
+    const url = (`https://fakestoreapi.com/products/${id}`)
+    const res = await fetch(url)
+    const details = await res.json()
+    displayDetails(details)
+}
+
+const displayDetails = (details) =>{
+    const detailsContainer = document.getElementById('details-container')
+     const {
+      price,
+      category,
+      image,
+      title,
+      description,
+      rating: { rate, count },
+    } = details;
+    detailsContainer.innerHTML = `
+<div class="card bg-base-100 shadow-sm">
+            <figure class="bg-gray-200">
+              <img class="h-48 p-2"
+                src="${image}"
+                alt="Shoes"
+              />
+            </figure>
+            <div class="card-body">
+              <div class="flex items-center text-xs gap-1 justify-between">
+                <div class="badge bg-blue-200 rounded-lg">${category}</div>
+                <div class="flex gap-2 items-center">
+                    <i class="fa-solid fa-star text-yellow-400"></i>
+                    <p>${rate} (${count})</p>
+                </div>
+              </div>
+              <h1 class="text-xl font-medium">
+                ${title}
+              </h1>
+              <p class="text-gray-400 text-sm font-medium">${description}</p>
+              <p class="font-bold text-sm">$${price}</p>
+              <div class="flex flex-wrap gap-2 items-center">
+                <button class="btn btn-primary flex-1">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    Add To Cart
+                </button>
+              </div>
+            </div>
+          </div>
+    `
+    document.getElementById('details_modal').showModal()
+
+}
+
 loadCategory();
 allProductLoad();
