@@ -83,6 +83,13 @@ const displayCategory = (categories) => {
     categoryContainer.append(categoryDiv);
   });
 };
+// Add to Cart
+const addToCart = () => {
+  const count = document.getElementById("count-add-to-cart");
+  let countCart = parseInt(count.innerText);
+  countCart++;
+  count.innerText = countCart;
+};
 // loadCategoryProduct
 const loadCategoryProduct = (category) => {
   const url = `https://fakestoreapi.com/products/category/${category}`;
@@ -139,7 +146,7 @@ const displayAllProducts = (products) => {
                     <i class="fa-solid fa-eye"></i>
                     Details
                 </button>
-                <button onclick="" class="btn btn-primary flex-1">
+                <button onclick="addToCart()" class="btn btn-primary flex-1">
                     <i class="fa-solid fa-cart-shopping"></i>
                     Add
                 </button>
@@ -200,13 +207,7 @@ const displayDetails = (details) => {
     `;
   document.getElementById("details_modal").showModal();
 };
-// Add to Cart
-const addToCart = () => {
-  const count = document.getElementById("count-add-to-cart");
-  let countCart = parseInt(count.innerText);
-  countCart++;
-  count.innerText = countCart;
-};
+
 
 loadCategory();
 allProductLoad();
