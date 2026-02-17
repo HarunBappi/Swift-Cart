@@ -46,7 +46,10 @@
               </ul>
             </div>
             <div class="navbar-end">
-              <a class=""><i class="fa-solid fa-cart-shopping text-2xl"></i></a>
+              <div class="flex -space-x-1">
+                <i class="fa-solid fa-cart-shopping text-2xl"></i>
+                <div id="count-add-to-cart" class="badge badge-primary badge-xs -mt-1 font-bold text-sm">0</div>
+              </div>
               <div class="dropdown">
                 <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
                   <i class="fa-solid fa-bars text-2xl"></i>
@@ -56,7 +59,7 @@
                   class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
                 >
                   <li><a class="sm-home text-blue-500">Home</a></li>
-                  <li><a class="sm-product ">Products</a></li>
+                  <li><a class="sm-product">Products</a></li>
                   <li><a>About</a></li>
                   <li><a>Contact</a></li>
                 </ul>

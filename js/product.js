@@ -18,8 +18,8 @@ productLink.addEventListener("click", () => {
   homeLink.classList.remove("text-blue-500");
 });
 // Sm device Home and Product
-const mobileHome = document.querySelector(".sm-home"); 
-const mobileProduct = document.querySelector(".sm-product")
+const mobileHome = document.querySelector(".sm-home");
+const mobileProduct = document.querySelector(".sm-product");
 // Home
 mobileHome.addEventListener("click", () => {
   homeSection.classList.remove("hidden");
@@ -139,7 +139,7 @@ const displayAllProducts = (products) => {
                     <i class="fa-solid fa-eye"></i>
                     Details
                 </button>
-                <button class="btn btn-primary flex-1">
+                <button onclick="" class="btn btn-primary flex-1">
                     <i class="fa-solid fa-cart-shopping"></i>
                     Add
                 </button>
@@ -190,7 +190,7 @@ const displayDetails = (details) => {
               <p class="text-gray-400 text-sm font-medium">${description}</p>
               <p class="font-bold text-sm">$${price}</p>
               <div class="flex flex-wrap gap-2 items-center">
-                <button class="btn btn-primary flex-1">
+                <button onclick="addToCart()" class="btn btn-primary flex-1">
                     <i class="fa-solid fa-cart-shopping"></i>
                     Add To Cart
                 </button>
@@ -199,6 +199,13 @@ const displayDetails = (details) => {
           </div>
     `;
   document.getElementById("details_modal").showModal();
+};
+// Add to Cart
+const addToCart = () => {
+  const count = document.getElementById("count-add-to-cart");
+  let countCart = parseInt(count.innerText);
+  countCart++;
+  count.innerText = countCart;
 };
 
 loadCategory();
