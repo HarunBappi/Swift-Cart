@@ -3,21 +3,40 @@ const productLink = document.getElementById("product-link");
 const homeSection = document.getElementById("home-section");
 const productSection = document.getElementById("product-section");
 
-homeLink.addEventListener("click", ()=>{
-    homeSection.classList.remove('hidden')
-    productSection.classList.add('hidden')
+homeLink.addEventListener("click", () => {
+  homeSection.classList.remove("hidden");
+  productSection.classList.add("hidden");
 
-    homeLink.classList.add('text-blue-500')
-    productLink.classList.remove('text-blue-500')
-})
-productLink.addEventListener('click', () =>{
-    homeSection.classList.add('hidden')
-    productSection.classList.remove("hidden")
+  homeLink.classList.add("text-blue-500");
+  productLink.classList.remove("text-blue-500");
+});
+productLink.addEventListener("click", () => {
+  homeSection.classList.add("hidden");
+  productSection.classList.remove("hidden");
 
-    productLink.classList.add('text-blue-500')
-    homeLink.classList.remove('text-blue-500')
-})
+  productLink.classList.add("text-blue-500");
+  homeLink.classList.remove("text-blue-500");
+});
+// Sm device Home and Product
+const mobileHome = document.querySelector(".sm-home"); 
+const mobileProduct = document.querySelector(".sm-product")
+// Home
+mobileHome.addEventListener("click", () => {
+  homeSection.classList.remove("hidden");
+  productSection.classList.add("hidden");
 
+  mobileHome.classList.add("text-blue-500");
+  mobileProduct.classList.remove("text-blue-500");
+});
+
+// Product
+mobileProduct.addEventListener("click", () => {
+  productSection.classList.remove("hidden");
+  homeSection.classList.add("hidden");
+
+  mobileProduct.classList.add("text-blue-500");
+  mobileHome.classList.remove("text-blue-500");
+});
 const loadCategory = () => {
   fetch("https://fakestoreapi.com/products/categories")
     .then((res) => res.json())
@@ -27,23 +46,25 @@ const loadCategory = () => {
 };
 
 // Active Category
-const activeCategory = (activeText)=>{
-    const buttons = document.querySelectorAll('#category-container button, #all-btn')
-    buttons.forEach(btn =>{
-        if(btn.innerText === activeText){
-            btn.classList.add('btn-primary')
-        }else{
-            btn.classList.remove('btn-primary')
-        }
-    })
-}
+const activeCategory = (activeText) => {
+  const buttons = document.querySelectorAll(
+    "#category-container button, #all-btn",
+  );
+  buttons.forEach((btn) => {
+    if (btn.innerText === activeText) {
+      btn.classList.add("btn-primary");
+    } else {
+      btn.classList.remove("btn-primary");
+    }
+  });
+};
 
 // Display category
 
 // ALL category
 document.getElementById("all-btn").addEventListener("click", () => {
   allProductLoad();
-  activeCategory('All')
+  activeCategory("All");
 });
 // Others category
 const displayCategory = (categories) => {
@@ -56,7 +77,7 @@ const displayCategory = (categories) => {
     button.innerText = category;
     button.addEventListener("click", () => {
       loadCategoryProduct(category);
-      activeCategory(category)
+      activeCategory(category);
     });
     categoryDiv.append(button);
     categoryContainer.append(categoryDiv);
@@ -85,7 +106,7 @@ const displayAllProducts = (products) => {
   allProducts.innerHTML = "";
   products.forEach((product) => {
     const {
-        id,
+      id,
       price,
       category,
       image,
@@ -130,24 +151,24 @@ const displayAllProducts = (products) => {
   });
 };
 // Products Details
-const loadProductsDetails = async (id)=>{
-    const url = (`https://fakestoreapi.com/products/${id}`)
-    const res = await fetch(url)
-    const details = await res.json()
-    displayDetails(details)
-}
+const loadProductsDetails = async (id) => {
+  const url = `https://fakestoreapi.com/products/${id}`;
+  const res = await fetch(url);
+  const details = await res.json();
+  displayDetails(details);
+};
 
-const displayDetails = (details) =>{
-    const detailsContainer = document.getElementById('details-container')
-     const {
-      price,
-      category,
-      image,
-      title,
-      description,
-      rating: { rate, count },
-    } = details;
-    detailsContainer.innerHTML = `
+const displayDetails = (details) => {
+  const detailsContainer = document.getElementById("details-container");
+  const {
+    price,
+    category,
+    image,
+    title,
+    description,
+    rating: { rate, count },
+  } = details;
+  detailsContainer.innerHTML = `
 <div class="card bg-base-100 shadow-sm">
             <figure class="bg-gray-200">
               <img class="h-48 p-2"
@@ -176,10 +197,9 @@ const displayDetails = (details) =>{
               </div>
             </div>
           </div>
-    `
-    document.getElementById('details_modal').showModal()
-
-}
+    `;
+  document.getElementById("details_modal").showModal();
+};
 
 loadCategory();
 allProductLoad();
